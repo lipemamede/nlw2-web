@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import PageHeader from '../../compoments/PageHeader'
 import Input from '../../compoments/Input';
@@ -8,7 +8,20 @@ import Select from '../../compoments/Select';
 
 import './styles.css'
 
-function TeacherList() {
+function TeacherForm() {
+  const [scheduleItems, setScheduleItems] = useState([
+    { week_day: 0, from: '', to: '', },
+
+  ])
+
+  function addNewScheduleItem() {
+    setScheduleItems([
+      ...scheduleItems,
+      { week_day: 0, from: '', to: '', }
+    ]);
+  }
+
+
   return (
     <div id="page-teacher-form" className="container">
       <PageHeader 
@@ -50,32 +63,35 @@ function TeacherList() {
         <fieldset>
           <legend>
             Horários disponíveis
-            <button type="button">
+            <button type="button" onClick={addNewScheduleItem}>
                 + Novo horário
             </button>
           </legend>
 
-          <div className="schedule-item">
-          <Select 
-              name="subject" 
-              label="Matéria" 
-              options={[
-                { value: 'Artes', label: 'Artes' },
-                { value: 'Biologia', label: 'Biologia' },
-                { value: 'Ciencia', label: 'Ciencia' },
-                { value: 'Educação Física', label: 'Educação Física' },
-                { value: 'Física', label: 'Física' },
-                { value: 'Geografia', label: 'Geografia' },
-                { value: 'História', label: 'História' },
-                { value: 'Matemática', label: 'Matemática' },
-                { value: 'Português', label: 'Português' },
-                { value: 'Quimica', label: 'Quimica' },
-              ]}
-            />
-            <Input name="from" label="Das" type="time" />
-            <Input name="to" label="Até" type="time" />
-          </div>
-             
+             {scheduleItems.map(scheduleItem => {
+               return (
+                <div key={scheduleItem.week_day} className="schedule-item">
+                <Select 
+                    name="subject" 
+                    label="Matéria" 
+                    options={[
+                      { value: 'Artes', label: 'Artes' },
+                      { value: 'Biologia', label: 'Biologia' },
+                      { value: 'Ciencia', label: 'Ciencia' },
+                      { value: 'Educação Física', label: 'Educação Física' },
+                      { value: 'Física', label: 'Física' },
+                      { value: 'Geografia', label: 'Geografia' },
+                      { value: 'História', label: 'História' },
+                      { value: 'Matemática', label: 'Matemática' },
+                      { value: 'Português', label: 'Português' },
+                      { value: 'Quimica', label: 'Quimica' },
+                    ]}
+                  />
+                  <Input name="from" label="Das" type="time" />
+                  <Input name="to" label="Até" type="time" />
+                </div>
+               )
+             })}
         </fieldset>
 
 
@@ -94,4 +110,4 @@ function TeacherList() {
   )
 }
 
-export default TeacherList;
+export default TeacherForm;
